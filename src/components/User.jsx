@@ -22,7 +22,7 @@ const User = () => {
     setError(null);
   };
 
-  const handleLogin = async () => {
+  const userLogin = async () => {
     const success = await authUser(username, password);
     if (success) {
       toggleModal();
@@ -31,7 +31,7 @@ const User = () => {
     }
   };
 
-  const handleRegister = async () => {
+  const userRegister = async () => {
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden");
       return;
@@ -48,7 +48,6 @@ const User = () => {
 
   return (
     <>
-      {/* Botón de usuario */}
       <Button
         style={{
           position: "absolute",
@@ -77,7 +76,6 @@ const User = () => {
         )}
       </Button>
 
-      {/* Modal de Login/Registro */}
       <Modal
         opened={isModalOpen}
         onClose={toggleModal}
@@ -119,7 +117,7 @@ const User = () => {
           >
             {isRegister ? "Login" : "Registrar Usuario"}
           </Button>
-          <Button onClick={isRegister ? handleRegister : handleLogin}>
+          <Button onClick={isRegister ? userRegister : userLogin}>
             {isRegister ? "Registrar" : "Login"}
           </Button>
         </Group>
