@@ -9,18 +9,15 @@ function MemeItem({ memes, hovered }) {
          radius="md"
          key={memes.id}
          style={{
-            display: "flex",
-            flexDirection: "column",
-            height: hovered ? "auto" : "200px",
-            width: hovered ? "auto" : "100%",
-            marginBottom: 1,
-            overflow: "hidden",
-            transition: "height 0.3s ease, width 0.3s ease",
             position: hovered ? "absolute" : "relative",
             top: hovered ? "-10px" : "0",
             left: hovered ? "-10px" : "0",
-            right: hovered ? "-10px" : "0",
-            bottom: hovered ? "-10px" : "0",
+            zIndex: hovered ? 10 : 1,
+            transition: "transform 0.2s ease, top 0.2s ease, left 0.2s ease",
+            transform: hovered ? "scale(1.2)" : "scale(1)",
+            width: hovered ? "240px" : "100%",
+            height: hovered ? "auto" : "100%",
+            overflow: "hidden",
          }}
         > 
          <Card.Section>
@@ -30,7 +27,7 @@ function MemeItem({ memes, hovered }) {
                 width: "100%",
                 height: "100%",
                 objectFit: hovered ? "contain" : "cover",
-                transition: "object-fit 0.3s ease",
+                transition: "object-fit 0.2s ease",
               }}
             />
          </Card.Section>
