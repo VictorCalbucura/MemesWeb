@@ -1,5 +1,6 @@
 import { Card, Image, Group, Text } from "@mantine/core";
 
+// Cards para mostrar los memes en la pantalla principal
 function MemeItem({ memes, hovered }) {
     return (
         <Card

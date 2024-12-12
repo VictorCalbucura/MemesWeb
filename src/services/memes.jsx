@@ -53,9 +53,9 @@ const urlBase = "https://memes-api.grye.org";
   }
 
 
-  export const fetchMemes = async (page, limit) => {
+  export const fetchMemes = async (page, limit, sort_by) => {
     try {
-      const url = `${urlBase}/memes/?page=${page}&limit=${limit}`;
+      const url = `${urlBase}/memes/?page=${page}&limit=${limit}&sort_by=${sort_by}`;
       const response = await fetch(url);
   
       const data = await response.json();

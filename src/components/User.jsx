@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import { register, login as loginUser } from "../api/memes";
+import { register } from "../services/memes";
 import { LoginContext } from "../context/LoginContext";
-import { Modal, Button, TextInput, Group, Title } from "@mantine/core";
+import { Modal, Button, TextInput, Group, Title, Text } from "@mantine/core";
 
 const User = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,7 +11,7 @@ const User = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const { authUser, isLogin, creds } = useContext(LoginContext);
+  const { authUser, isLogin } = useContext(LoginContext);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -23,6 +23,11 @@ const User = () => {
   };
 
   const userLogin = async () => {
+    if (!username || !password) {
+      setError("Por favor ingrese usuario y contraseña");
+      return;
+    }
+  
     const success = await authUser(username, password);
     if (success) {
       toggleModal();
@@ -35,13 +40,13 @@ const User = () => {
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden");
       return;
-    }
+    };
 
     const [_, registerError] = await register(username, password);
     if (registerError) {
       setError(registerError);
     } else {
-      alert("Usuario registrado, por favor ingrese a su usuario creado");
+      alert("Usuario registrado, recuerde iniciar sesión");
       toggleModal();
     }
   };
@@ -51,36 +56,32 @@ const User = () => {
       <Button
         style={{
           position: "absolute",
-          top: 10,
-          right: 10,
-          background: "none",
-          border: "none",
+          top: 23,
+          right: 20,
+          width: 140,
+          borderRadius: 8,
+          backgroundColor: "#228be6",
+          color: "white",
         }}
         onClick={toggleModal}
+        disabled={isLogin}
       >
-        {isLogin ? (
-          <Group>
-            <img
-              src="https://cdn.icon-icons.com/icons2/2645/PNG/512/person_icon_159921.png"
-              alt="User Logged In"
-              style={{ width: 30, height: 30 }}
-            />
-            <span>{creds.username}</span>
-          </Group>
-        ) : (
+        <Group direction="column" align="center">
           <img
             src="https://cdn-icons-png.flaticon.com/512/10985/10985667.png"
             alt="Login Icon"
             style={{ width: 30, height: 30 }}
           />
-        )}
+          {isLogin ? "Logged" : "Login"}
+        </Group>
       </Button>
 
-      <Modal
+      <Modal centered
         opened={isModalOpen}
         onClose={toggleModal}
         title={<Title order={3}>{isRegister ? "REGISTRAR USUARIO" : "LOGIN"}</Title>}
       >
+
         <TextInput
           label="Usuario"
           placeholder="Ingrese su usuario"

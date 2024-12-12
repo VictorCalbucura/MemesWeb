@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { login } from "../api/memes.jsx";
+import { login } from "../services/memes.jsx";
 
 export const LoginContext = createContext();
 
