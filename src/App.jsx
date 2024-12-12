@@ -5,6 +5,7 @@ import MemeScroll from "./components/MemeScroll";
 import MemeElement from "./components/MemeElement";
 import User from "./components/User"
 import { ProvLogin } from "./context/LoginContext";
+import UploadMeme from "./components/UploadMeme";
 
 function App() {
   const [memes, setMemes] = useState([]);
@@ -35,6 +36,7 @@ function App() {
         pointerEvents: selectedMeme ? "none" : "auto",
       }}>
       <User />
+      <UploadMeme />
       <Image
         src={"https://i.postimg.cc/VNM609tJ/Asi-venpezo-empezuela-removebg-preview.png"}
         style={{
