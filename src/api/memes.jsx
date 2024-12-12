@@ -78,12 +78,12 @@ const urlBase = "https://memes-api.grye.org";
         return [null, 'Debes iniciar sesión para subir un meme'];
       }
       const url = `${urlBase}/memes/?title=${encodeURIComponent(
-      titulo,
-      )}&description=${encodeURIComponent(descripcion)}`;
+      title,
+      )}&description=${encodeURIComponent(description)}`;
       
       const formData = new FormData();
 
-      formData.append("file", image.file);
+      formData.append("file", image);
 
       const response = await fetch(url, {
         method: "POST",
@@ -91,10 +91,10 @@ const urlBase = "https://memes-api.grye.org";
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
         },
-        body: dataFormulario,
+        body: formData,
       });
 
-      if (!respuesta.ok) {
+      if (!response.ok) {
         return [null, "Error al subir meme"];
       }
 

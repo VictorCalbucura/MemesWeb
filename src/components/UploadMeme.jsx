@@ -46,7 +46,7 @@ function UploadMeme() {
             style={{
                 position: "absolute",
                 top: 10,
-                right: 30,
+                right: 80,
             }}
             onClick={toggleModal}>
             Subir Meme
@@ -69,7 +69,7 @@ function UploadMeme() {
                 label="Descripcion"
                 placeholder="Explique su meme (o no lo entenderemos)"
                 value={description}
-                onChange={(e) => updateTitle(e.target.value)}
+                onChange={(e) => updateDescription(e.target.value)}
                 required
             />
             
@@ -78,7 +78,7 @@ function UploadMeme() {
                 label="Imagen" 
                 placeholder="Inserte su meme aquí."
                 value={image}
-                onChange={(e) => updateImage(e.target.value)}
+                onChange={updateImage}
                 required 
             />
 
@@ -90,7 +90,7 @@ function UploadMeme() {
                 onClick={confirmUpload}
                 >
                     Subir Meme
-            </Button>;
+            </Button>
         </Modal>
         </>
     )
