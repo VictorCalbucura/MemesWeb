@@ -18,7 +18,7 @@ function UploadMeme() {
         updateTitle("");
         updateDescription("");
         updateImage(null);
-    }
+    };
 
     const confirmUpload = async () => {
         if (!image || !title || !description){
@@ -34,7 +34,7 @@ function UploadMeme() {
             alert(uploadError)
         } else {
             alert("Meme Subido con Éxito");
-            toggleModal();
+            toggleModal;
         }
     };
     return (
@@ -48,7 +48,7 @@ function UploadMeme() {
                 top: 10,
                 right: 30,
             }}
-            onClick={toggleModal()}>
+            onClick={toggleModal}>
             Subir Meme
         </Button>;
 
