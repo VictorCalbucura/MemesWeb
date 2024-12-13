@@ -1,5 +1,5 @@
 import { Card, Image, Text, Overlay, Button } from "@mantine/core";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { likeMeme } from "../services/memes";
 import { LoginContext } from "../context/LoginContext";
 import useMemes from "../hooks/useMemes";
@@ -7,15 +7,32 @@ import useMemes from "../hooks/useMemes";
 // Modal para mostrar un meme en pantalla completa
 function MemeElement({ meme, onClose }) {
   const { memes, estaCargando, cargarMasMemes, actualizarMemes } = useMemes();
+  const [likeCount, setLikeCount] = useState(meme.likes || 0);
   const [isLiked, setIsLiked] = useState(false);
   const { isLogin, creds } = useContext(LoginContext);
 
   if (!meme) return null;
 
-  const toggleLike = async () => {
-    setIsLiked((prev) => !prev);
-    await manejarLike(meme._id);
-  };
+  useEffect(() => {
+    const uploadMemeDetails = async () => {
+      if (!meme || !creds || !isLogin) return;
+
+      try {
+        const [memeDetails, error] = await getMemeDetails(meme._id, creds.access_token);
+        if (error) {
+          console.error("Error al cargar los detalles del meme:", error);
+          return;
+        }
+
+        setIsLiked(memeDetails.liked_by_user || false);
+        setLikeCount(memeDetails.likes || 0);
+      } catch (err) {
+        console.error("Error inesperado al cargar el estado del meme:", err);
+      }
+    };
+
+    uploadMemeDetails();
+  }, [meme, creds, isLogin]);
 
   const manejarLike = async (memeId) => {
     if (!isLogin || !creds) {
@@ -29,7 +46,8 @@ function MemeElement({ meme, onClose }) {
       return;
     }
 
-    alert("Le diste like al meme", mensaje);
+    setIsLiked((prev) => !prev);
+    setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
   };
 
   return (
@@ -97,7 +115,7 @@ function MemeElement({ meme, onClose }) {
             left: 85,
           }}
         >
-          {meme.likes}
+          {likeCount}
         </Text>
         <div style={{ textAlign: "center", marginTop: 20 }}>
           <Text size="xl" fw={700}>
