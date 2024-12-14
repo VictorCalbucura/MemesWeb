@@ -2,11 +2,9 @@ import { Card, Image, Text, Overlay, Button } from "@mantine/core";
 import { useState, useContext, useEffect } from "react";
 import { likeMeme } from "../services/memes";
 import { LoginContext } from "../context/LoginContext";
-import useMemes from "../hooks/useMemes";
 
 // Modal para mostrar un meme en pantalla completa
 function MemeElement({ meme, onClose }) {
-  const { memes, estaCargando, cargarMasMemes, actualizarMemes } = useMemes();
   const [likeCount, setLikeCount] = useState(meme.likes || 0);
   const [isLiked, setIsLiked] = useState(false);
   const { isLogin, creds } = useContext(LoginContext);

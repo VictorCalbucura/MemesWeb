@@ -10,15 +10,22 @@ const useMemes = () => {
 
   const cargarMemes = async (pagina, reset = false) => {
     setEstaCargando(true);
-
+  
     try {
       const [data, error] = await fetchMemes(pagina, 12, sort_by);
       if (error) {
         console.error(error);
         return;
       }
-
-      setMemes((prevMemes) => (reset ? data : [...prevMemes, ...data]));
+  
+      setMemes((prevMemes) => {
+        if (reset) return data;
+  
+        const idsExistentes = new Set(prevMemes.map((meme) => meme._id));
+        const nuevosMemes = data.filter((meme) => !idsExistentes.has(meme._id));
+        return [...prevMemes, ...nuevosMemes];
+      });
+  
       setHayMas(data.length === 12);
     } catch (error) {
       console.error(error);
@@ -26,28 +33,30 @@ const useMemes = () => {
       setEstaCargando(false);
     }
   };
+  
 
   const cambiarOrden = (nuevoOrden) => {
+    if (nuevoOrden === sort_by) return;
+
     setSortBy(nuevoOrden);
-    setPagina(1); 
+    setPagina(1);
     cargarMemes(1, true);
   };
 
   const cargarSiguientePagina = () => {
     if (!estaCargando && hayMas) {
-      setPagina((prevPagina) => {
-        const nuevaPagina = prevPagina + 1;
-        cargarMemes(nuevaPagina);
-        return nuevaPagina;
-      });
+      const nuevaPagina = pagina + 1;
+      setPagina(nuevaPagina);
+      cargarMemes(nuevaPagina);
     }
   };
+  
 
   useEffect(() => {
-    cargarMemes(pagina, pagina === 1);
+    cargarMemes(1, true);
   }, [sort_by]);
 
-  return { memes, estaCargando, hayMas, cargarSiguientePagina, cambiarOrden, cargarMemes, sort_by };
+  return { memes, estaCargando, hayMas, cargarSiguientePagina, cambiarOrden, sort_by };
 };
 
 export default useMemes;
