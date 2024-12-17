@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AppShell, Container, Title, Image, Flex, Paper, Box, Button } from "@mantine/core";
-import { fetchMemes } from "./services/memes";
 import MemeScroll from "./components/MemeScroll";
 import MemeElement from "./components/MemeElement";
 import User from "./components/User";

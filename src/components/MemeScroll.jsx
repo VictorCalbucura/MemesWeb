@@ -1,6 +1,5 @@
-import { SimpleGrid, Button, Center, Loader } from "@mantine/core";
+import { SimpleGrid, Center } from "@mantine/core";
 import MemeItem from "./MemeItem";
-import useMemes from "../hooks/useMemes";
 
 function MemeScroll({ memes, onMemeClick }) {
   return (

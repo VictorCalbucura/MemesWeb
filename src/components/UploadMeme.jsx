@@ -6,7 +6,7 @@ import useMemes from "../hooks/useMemes";
 
 function UploadMeme() {
     const { isLogin, creds } = useContext(LoginContext);
-    const { cargarMemes } = useMemes();
+    const { actualizarMemes } = useMemes();
 
     const [isModalOpen, updateIsModalOpen] = useState(false);
     const [title, updateTitle] = useState("");
@@ -35,7 +35,7 @@ function UploadMeme() {
             alert(uploadError);
         } else {
             alert("Meme Subido con Éxito");
-            cargarMemes(1, true);
+            actualizarMemes();
             toggleModal();
         }
     };

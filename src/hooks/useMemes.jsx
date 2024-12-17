@@ -33,8 +33,14 @@ const useMemes = () => {
       setEstaCargando(false);
     }
   };
-  
 
+    const actualizarMemes = () => {
+      setMemes([]);
+      setPagina(1);
+      setHayMas(true);
+      cargarMemes(1, true);
+  };
+  
   const cambiarOrden = (nuevoOrden) => {
     if (nuevoOrden === sort_by) return;
 
@@ -51,12 +57,11 @@ const useMemes = () => {
     }
   };
   
-
   useEffect(() => {
     cargarMemes(1, true);
   }, [sort_by]);
 
-  return { memes, estaCargando, hayMas, cargarSiguientePagina, cambiarOrden, sort_by };
+  return { memes, estaCargando, hayMas, cargarSiguientePagina, actualizarMemes, cambiarOrden, sort_by };
 };
 
 export default useMemes;
